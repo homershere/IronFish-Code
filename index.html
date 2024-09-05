@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ironfish Mining Pool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Ironfish Mining Pool</h1>
+    </header>
+
+    <section class="pool-info">
+        <h2>Pool Statistics</h2>
+        <p>Details about the pool (e.g., hash rate, number of miners, etc.)</p>
+    </section>
+
+    <section class="miner-updates">
+        <h2>Updates</h2>
+        <div id="messages"></div>
+        <form id="messageForm">
+            <textarea id="messageInput" rows="3" placeholder="Leave a message for miners..."></textarea>
+            <button type="submit">Send Update</button>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

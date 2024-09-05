@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+.pool-info {
+    padding: 1rem;
+    text-align: center;
+    background-color: #fefefe;
+}
+
+.miner-updates {
+    padding: 2rem;
+    background-color: #e8e8e8;
+}
+
+#messages {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+#messageForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#messageInput {
+    resize: none;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    padding: 0.5rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const messageForm = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+    const messagesDiv = document.getElementById('messages');
+
+    // Fetch messages on load
+    const fetchMessages = async () => {
+        const res = await fetch('/messages');
+        const data = await res.json();
+        messagesDiv.innerHTML = data.map(msg => `<p>${msg.message} - <em>${new Date(msg.createdAt).toLocaleString()}</em></p>`).join('');
+    };
+
+    // Submit new message
+    messageForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = messageInput.value;
+        if (message) {
+            await fetch('/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            });
+            messageInput.value = ''; // Clear the input field
+            fetchMessages(); // Refresh the messages list
+        }
+    });
+
+    // Initial load
+    fetchMessages();
+});
